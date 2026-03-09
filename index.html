@@ -661,7 +661,8 @@ function saveEdit() {
 
     // Mengisi pasangan jika tipe form adalah "Pasangan"
     if (type === "Pasangan" && selectedNode) {
-            document.querySelector("#formContainer #spouse").value = selectedNode.key;
+        // gunakan key dari data node, bukan properti node GoJS langsung
+        document.querySelector("#formContainer #spouse").value = selectedNode.data.key;
     }
 
     // Mengisi orang tua jika tipe form adalah "Anak"
@@ -681,25 +682,25 @@ function saveEdit() {
     const form = this;
     const formData = new FormData(form);
 
-    // Get form field values
-    var name = document.getElementById('personName').value.trim();
-    var gender = document.getElementById('personGender').value;
-    var alamat = document.getElementById('alamat').value;
-    var tel = document.getElementById('tel').value;
-    var spouseKey = document.getElementById('spouse').value.trim();
-    var parentKey = document.getElementById('parent').value.trim();
+    // Ambil nilai field hanya dari formContainer (hindari bentrok dengan input lain yang punya id sama)
+    var name = form.querySelector('input[name="name"]').value.trim();
+    var gender = form.querySelector('select[name="gender"]').value;
+    var alamat = form.querySelector('input[name="alamat"]').value;
+    var tel = form.querySelector('input[name="tel"]').value;
+    var spouseKey = form.querySelector('input[name="spouse"]').value.trim();
+    var parentKey = form.querySelector('input[name="parent"]').value.trim();
 
-    // Set formType based on some condition (this is just an example, you can modify it as per your logic)
+    // Tentukan tipe form dari isian key
     var formType = spouseKey ? "Pasangan" : parentKey ? "Anak" : "";
 
-    // Check if the form type is 'Pasangan' or 'Anak' and call appropriate function
+    // Panggil fungsi lokal untuk update diagram
     if (formType === "Pasangan") {
-        addSpouse(name, gender, alamat, tel); // Function to add spouse
+        addSpouse(name, gender, alamat, tel);
     } else if (formType === "Anak") {
-        addChild(name, gender, alamat, tel); // Function to add child
+        addChild(name, gender, alamat, tel);
     }
 
-    // Data to send in the POST request
+    // (Optional) dataToSend jika nanti ingin pakai URLSearchParams
     var dataToSend = {
         name: name,
         gender: gender,
@@ -709,29 +710,29 @@ function saveEdit() {
         tel: tel
     };
 
-    // Make the fetch request to the Google Apps Script endpoint
+    // Kirim ke Google Apps Script (formData sudah berisi field name/gender/spouse/parent/alamat/tel)
     fetch('https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec', {
         method: 'POST',
         mode: 'cors',
-        body: formData // Use formData directly
+        body: formData
     })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok ' + response.statusText);
         }
-        return response.json(); // Parse JSON response
+        return response.json();
     })
     .then(data => {
         console.log('Success:', data);
         alert('Input Berhasil');
-        form.reset(); // Clear the form fields
-        hideForm(); // Hide the form after successful submission
+        form.reset();
+        hideForm();
         location.reload();
     })
     .catch(error => {
         console.error('Error:', error);
-        form.reset(); // Clear the form fields
-        hideForm(); // Hide the form after error
+        form.reset();
+        hideForm();
         location.reload();
     });
 });
