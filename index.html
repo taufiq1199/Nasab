@@ -355,7 +355,7 @@ body {
             <button onclick="showForm('Pasangan')"><i class="fa fa-user-plus"></i></button>
             <button onclick="showForm('Anak')"><i class="fa fa-child"></i></button>
         </div>
-        <form id="formContainer" action="https://script.google.com/macros/s/AKfycbxL-9LluNfWDhjH_iUF6oc7TKvMynDS7I2PQjwuxABOxptJcj41aNizXhHDEJyxb_eZDg/exec" method="POST">
+        <form id="formContainer" action="https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec" method="POST">
             <div class="form-container">
                 <h3 id="formTitle">Form Data Submission</h3>
         
@@ -610,7 +610,7 @@ function saveEdit() {
         };
 
         // Memanggil doPost menggunakan Fetch API
-        fetch('https://script.google.com/macros/s/AKfycbxL-9LluNfWDhjH_iUF6oc7TKvMynDS7I2PQjwuxABOxptJcj41aNizXhHDEJyxb_eZDg/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec', {
             method: 'POST',
             body: new URLSearchParams(postData),
             headers: {
@@ -710,7 +710,7 @@ function saveEdit() {
     };
 
     // Make the fetch request to the Google Apps Script endpoint
-    fetch('https://script.google.com/macros/s/AKfycbxL-9LluNfWDhjH_iUF6oc7TKvMynDS7I2PQjwuxABOxptJcj41aNizXhHDEJyxb_eZDg/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec', {
         method: 'POST',
         mode: 'cors',
         body: formData // Use formData directly
@@ -907,7 +907,7 @@ function getDescendants(node) {
     var key = selectedNode.data.key;
 
     // URL API Google Apps Script
-    var url = "https://script.google.com/macros/s/AKfycbxL-9LluNfWDhjH_iUF6oc7TKvMynDS7I2PQjwuxABOxptJcj41aNizXhHDEJyxb_eZDg/exec";
+    var url = "https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec";
     
     // Mengirim permintaan POST dengan parameter key untuk menghapus data
     fetch(url, {
@@ -944,7 +944,7 @@ function getDescendants(node) {
 }
 
 
-        fetch("https://script.google.com/macros/s/AKfycbxL-9LluNfWDhjH_iUF6oc7TKvMynDS7I2PQjwuxABOxptJcj41aNizXhHDEJyxb_eZDg/exec")
+        fetch("https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec")
     .then(response => response.json())
     .then(data => {
         console.log("Data diterima:", data); // Debugging
