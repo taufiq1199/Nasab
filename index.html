@@ -305,7 +305,7 @@ body {
 </head>
 <body>
     <div class="search-container">
-        <h2>Bani ......</h2>
+        <h2>Bani Mushthofa</h2>
         <input type="text" id="nodeInput" list="nameSuggestions" placeholder="Cari nama..." oninput="filterNames()">
         <datalist id="nameSuggestions"></datalist>
         <button onclick="searchNode()">
@@ -355,7 +355,7 @@ body {
             <button onclick="showForm('Pasangan')"><i class="fa fa-user-plus"></i></button>
             <button onclick="showForm('Anak')"><i class="fa fa-child"></i></button>
         </div>
-        <form id="formContainer" action="https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec" method="POST">
+        <form id="formContainer" action="https://script.google.com/macros/s/AKfycbzbxmPaCAtNCHs0xvc94Hqn5YdkokNE0sWJTW0mhylewcu-551YBqCcV_8C5sst3ahsgg/exec" method="POST">
             <div class="form-container">
                 <h3 id="formTitle">Form Data Submission</h3>
         
@@ -610,7 +610,7 @@ function saveEdit() {
         };
 
         // Memanggil doPost menggunakan Fetch API
-        fetch('https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbyCMulvzD1tC_G22eDdU-4lSqaNa7T0A8Da8ZYurJoE6GD0pgXv8-xmsGW44jDEgRzjng/exec', {
             method: 'POST',
             body: new URLSearchParams(postData),
             headers: {
@@ -711,7 +711,7 @@ function saveEdit() {
     };
 
     // Kirim ke Google Apps Script (formData sudah berisi field name/gender/spouse/parent/alamat/tel)
-    fetch('https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzbxmPaCAtNCHs0xvc94Hqn5YdkokNE0sWJTW0mhylewcu-551YBqCcV_8C5sst3ahsgg/exec', {
         method: 'POST',
         mode: 'cors',
         body: formData
@@ -908,7 +908,7 @@ function getDescendants(node) {
     var key = selectedNode.data.key;
 
     // URL API Google Apps Script
-    var url = "https://script.google.com/macros/s/AKfycbzIlgOwzi-jn_d34PeqhwHtkxKbGrjgoJb4OL-0u3LMmaBapIEnqR2UufWAd5bvqhEptw/exec";
+    var url = "https://script.google.com/macros/s/AKfycbxvlbK7k1EWzIbwNx7T-pLHSZiMzp90Y2m24sWf4TQRSLraNChVL9SH-o8JZNJREjBJOQ/exec";
     
     // Mengirim permintaan POST dengan parameter key untuk menghapus data
     fetch(url, {
