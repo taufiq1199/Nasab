@@ -72,23 +72,42 @@
             transform: translate(-50%, -50%);
             background: #fff;
             padding: 20px 25px;
-            border-radius: 10px;
-            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
             width: 90%;
-            max-width: 420px;
+            max-width: 450px;
             text-align: left;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
         }
 
+        .modal h2,
+        .modal h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+            font-size: 20px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
         }
 
         .form-group label {
             display: block;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 13px;
+            font-weight: 600;
             color: #555;
             margin-bottom: 5px;
         }
@@ -96,17 +115,31 @@
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            border: 1px solid #ced4da;
             border-radius: 6px;
             box-sizing: border-box;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .form-group input:disabled {
+            background-color: #e9ecef;
+            color: #495057;
+            cursor: not-allowed;
         }
 
         .button-group {
             display: flex;
             justify-content: space-between;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .button-group button {
@@ -116,7 +149,21 @@
             border-radius: 6px;
             cursor: pointer;
             color: white;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 14px;
+            transition: opacity 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .button-group button:hover {
+            opacity: 0.9;
+        }
+
+        .button-group button:active {
+            transform: scale(0.98);
         }
 
         .btn-save {
@@ -135,13 +182,40 @@
             background: #f39c12;
         }
 
+        .btn-cancel {
+            background: #6c757d;
+        }
+
         .btn-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
             background: none;
             border: none;
-            color: #666;
-            font-size: 20px;
-            float: right;
+            color: #999;
+            font-size: 24px;
             cursor: pointer;
+            line-height: 1;
+            transition: color 0.2s;
+        }
+
+        .btn-close:hover {
+            color: #333;
+        }
+
+        @media (max-width: 480px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -152,8 +226,7 @@
         <input type="text" id="nodeInput" list="nameSuggestions" placeholder="Cari nama..." oninput="filterNames()">
         <datalist id="nameSuggestions"></datalist>
         <button onclick="searchNode()"><i class="fas fa-search"></i></button>
-        <button onclick="showAddRootForm()" style="background: #28a745;"><i class="fas fa-plus-circle"></i> Tambah
-            Utama</button>
+        <button onclick="showAddRootForm()" style="background: #28a745;"><i class="fas fa-plus-circle"></i></button>
     </div>
 
     <div id="myDiagramDiv"></div>
@@ -161,24 +234,29 @@
     <!-- Modal Edit/Add -->
     <div id="modal" class="modal">
         <button class="btn-close" onclick="closeModal()">&times;</button>
-        <h2 id="modalTitle">Edit Data</h2>
 
         <div id="editFields">
+            <h2 id="modalTitle">Edit Data</h2>
             <input type="hidden" id="editKey">
-            <div class="form-group"><label>Nama:</label><input type="text" id="editName"></div>
-            <div class="form-group"><label>Gender:</label><select id="editGender">
-                    <option value="male">Laki-laki</option>
-                    <option value="female">Perempuan</option>
-                </select></div>
-            <div class="form-group"><label>Pasangan (Key):</label><input type="text" id="editSpouse" readonly></div>
-            <div class="form-group"><label>Orang Tua (Key):</label><input type="text" id="editParent" readonly></div>
-            <div class="form-group"><label>Alamat:</label><input type="text" id="editAlamat"></div>
-            <div class="form-group"><label>Telepon:</label><input type="text" id="editTel"></div>
+            <div class="form-grid">
+                <div class="form-group full-width"><label>Nama:</label><input type="text" id="editName"></div>
+                <div class="form-group"><label>Gender:</label><select id="editGender">
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                    </select></div>
+                <div class="form-group"><label>Telepon:</label><input type="text" id="editTel" placeholder="+62...">
+                </div>
+                <div class="form-group full-width"><label>Alamat:</label><input type="text" id="editAlamat"></div>
+
+                <div class="form-group"><label>Pasangan:</label><input type="text" id="editSpouseName" disabled></div>
+                <div class="form-group"><label>Orang Tua:</label><input type="text" id="editParentName" disabled></div>
+            </div>
+
             <div class="button-group">
                 <button class="btn-save" onclick="saveEdit()"><i class="fa fa-save"></i> Simpan</button>
                 <button class="btn-delete" onclick="removeNode()"><i class="fa fa-trash"></i> Hapus</button>
             </div>
-            <div class="button-group" style="margin-top: 20px;">
+            <div class="button-group" style="margin-top: 10px;">
                 <button class="btn-spouse" onclick="showAddForm('Pasangan')"><i class="fa fa-user-plus"></i>
                     +Pasangan</button>
                 <button class="btn-child" onclick="showAddForm('Anak')"><i class="fa fa-child"></i> +Anak</button>
@@ -187,19 +265,21 @@
 
         <div id="addFormExtra" style="display:none;">
             <h3 id="addTitle">Tambah Data Baru</h3>
-            <div class="form-group"><label>Nama:</label><input type="text" id="addName" placeholder="Contoh: Ummi">
+            <div class="form-grid">
+                <div class="form-group full-width"><label>Nama:</label><input type="text" id="addName"
+                        placeholder="Contoh: Ummi"></div>
+                <div class="form-group"><label>Gender:</label><select id="addGender">
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                    </select></div>
+                <div class="form-group"><label>Telepon:</label><input type="text" id="addTel" placeholder="+62...">
+                </div>
+                <div class="form-group full-width"><label>Alamat:</label><input type="text" id="addAlamat"
+                        placeholder="Contoh: Patemon"></div>
             </div>
-            <div class="form-group"><label>Gender:</label><select id="addGender">
-                    <option value="male">Laki-laki</option>
-                    <option value="female">Perempuan</option>
-                </select></div>
-            <div class="form-group"><label>Alamat:</label><input type="text" id="addAlamat"
-                    placeholder="Contoh: Patemon"></div>
-            <div class="form-group"><label>Telepon:</label><input type="text" id="addTel" placeholder="+62..."></div>
             <div class="button-group">
-                <button class="btn-save" style="width:100%" onclick="submitNewData()">Submit</button>
-                <button onclick="hideAddForm()"
-                    style="background:#666; color:white; border:none; border-radius:6px; padding:10px;">Batal</button>
+                <button class="btn-save" onclick="submitNewData()"><i class="fa fa-save"></i> Submit</button>
+                <button class="btn-cancel" onclick="hideAddForm()"><i class="fa fa-times"></i> Batal</button>
             </div>
         </div>
     </div>
@@ -210,22 +290,115 @@
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "myDiagramDiv", {
-            layout: $(go.TreeLayout, { angle: 90, layerSpacing: 40 })
+            "undoManager.isEnabled": true,
+            layout: $(go.TreeLayout, {
+                angle: 0,
+                layerSpacing: 30,
+                nodeSpacing: 5,
+                alignment: go.TreeLayout.AlignmentCenter,
+                sorting: go.TreeLayout.SortingAscending
+            })
         });
 
         var selectedNode = null;
         var currentAddType = "";
 
-        // Node Template
+        // Fungsi sorotan (Highlighting node terhubung)
+        function focusConnectedNodes(selectedNode) {
+            myDiagram.startTransaction("highlight");
+            myDiagram.nodes.each(n => n.visible = false);
+            myDiagram.links.each(l => l.visible = false);
+
+            function showConnected(node) {
+                if (!node || node.visible) return;
+                node.visible = true;
+                node.findNodesOutOf().each(child => showConnected(child));
+                node.findNodesConnected().each(connectedNode => connectedNode.visible = true);
+                node.findLinksConnected().each(link => link.visible = true);
+            }
+            showConnected(selectedNode);
+            myDiagram.commitTransaction("highlight");
+        }
+
+        // Reset tampilan jika klik background
+        myDiagram.addDiagramListener("BackgroundSingleClicked", function () {
+            myDiagram.startTransaction("reset");
+            myDiagram.nodes.each(n => n.visible = true);
+            myDiagram.links.each(l => l.visible = true);
+            myDiagram.commitTransaction("reset");
+        });
+
+        // Node Template (Sesuai kode awal)
         myDiagram.nodeTemplate = $(go.Node, "Auto",
-            { doubleClick: (e, obj) => openModal(obj.part) },
-            $(go.Shape, "RoundedRectangle", { fill: "white", strokeWidth: 2 },
-                new go.Binding("stroke", "gender", g => g === "male" ? "#007bff" : "#dc3545")),
-            $(go.TextBlock, { margin: 10, font: "bold 13px sans-serif" }, new go.Binding("text", "name"))
+            {
+                click: function (e, obj) {
+                    var node = obj.part;
+                    if (node !== null) {
+                        focusConnectedNodes(node);
+                    }
+                },
+                doubleClick: (e, obj) => openModal(obj.part)
+            },
+            $(go.Shape, "RoundedRectangle", {
+                width: 100, height: 40, strokeWidth: 2, fill: "white",
+            },
+                new go.Binding("stroke", "gender", function (g) {
+                    return g === "male" ? "gold" : "red";
+                })
+            ),
+            $(go.TextBlock, {
+                margin: 0,
+                maxSize: new go.Size(90, NaN),
+                wrap: go.TextBlock.WrapFit,
+                overflow: go.TextBlock.OverflowEllipsis,
+                font: "bold 10px sans-serif",
+                textAlign: "center"
+            },
+                new go.Binding("text", "name")
+            )
         );
 
-        // Link Template
-        myDiagram.linkTemplate = $(go.Link, { routing: go.Link.Orthogonal, corner: 10 }, $(go.Shape, { strokeWidth: 2, stroke: "#666" }));
+        // Link Template Default (Anak) dengan 🪢
+        myDiagram.linkTemplate = $(go.Link,
+            { routing: go.Link.AvoidsNodes, curve: go.Link.JumpOver },
+            $(go.Shape),
+            $(go.Shape, { toArrow: "Standard" }),
+            $(go.Panel, "Auto",
+                {
+                    segmentFraction: 0.5,
+                    segmentOrientation: function (link) {
+                        return link.actualBounds.width > link.actualBounds.height
+                            ? go.Link.OrientUpright
+                            : go.Link.OrientSideways;
+                    }
+                },
+                $(go.TextBlock, "🪢", { font: "bold 10px sans-serif", stroke: "black" })
+            )
+        );
+
+        // Link Template Khusus (Pasangan) dengan ❤️
+        myDiagram.linkTemplateMap.add("Spouse",
+            $(go.Link,
+                { routing: go.Link.Orthogonal, selectable: false }, // Garis tidak bisa dipilih
+                $(go.Shape, { stroke: "green", strokeWidth: 2 }), // Garis hijau
+                $(go.TextBlock, "❤️",  // Ikon pernikahan
+                    {
+                        segmentFraction: 0.5, // Posisikan ikon di tengah garis
+                        font: "10px Arial",
+                        stroke: "red",
+
+                        // Gunakan logika untuk orientasi tergantung pada panjang link
+                        segmentOrientation: function (link) {
+                            if (link.actualBounds.width > link.actualBounds.height) {
+                                return go.Link.OrientUpright; // Orientasi tegak untuk garis horizontal
+                            } else {
+                                return go.Link.OrientSideways; // Orientasi datar untuk garis vertikal
+                            }
+                        }
+                    }
+                )
+            )
+        );
 
         // Load Data
         function loadData() {
@@ -233,6 +406,14 @@
                 .then(res => res.json())
                 .then(res => {
                     if (res.status === "success") {
+                        // Kategori 'Spouse' ditentukan di backend atau frontend
+                        // Pastikan frontend juga mengenali kategori dari key pasangannya
+                        res.data.links.forEach(link => {
+                            // Cek jika ini adalah hubungan pasangan yang ditentukan dari data
+                            if (!link.category && res.data.nodes.find(n => n.key === link.from && n.spouse == link.to)) {
+                                link.category = "Spouse";
+                            }
+                        });
                         myDiagram.model = new go.GraphLinksModel(res.data.nodes, res.data.links);
                     }
                 }).catch(err => console.error("Fetch error:", err));
@@ -247,10 +428,25 @@
             document.getElementById("editKey").value = node.data.key;
             document.getElementById("editName").value = node.data.name;
             document.getElementById("editGender").value = node.data.gender;
-            document.getElementById("editSpouse").value = node.data.spouse || "";
-            document.getElementById("editParent").value = node.data.parent || "";
             document.getElementById("editAlamat").value = node.data.alamat || "";
             document.getElementById("editTel").value = node.data.tel || "";
+
+            // Mapping nama Pasangan dan Orang Tua (Berdasarkan ID di Model GoJS)
+            let spouseName = "-";
+            if (node.data.spouse) {
+                let sNode = myDiagram.model.findNodeDataForKey(node.data.spouse);
+                if (sNode) spouseName = sNode.name;
+            }
+
+            let parentName = "-";
+            if (node.data.parent) {
+                let pNode = myDiagram.model.findNodeDataForKey(node.data.parent);
+                if (pNode) parentName = pNode.name;
+            }
+
+            document.getElementById("editSpouseName").value = spouseName;
+            document.getElementById("editParentName").value = parentName;
+
             document.getElementById("modal").style.display = "block";
         }
 
@@ -354,14 +550,24 @@
         }
 
         function searchNode() {
-            var nodeName = document.getElementById("nodeInput").value;
-            var found = null;
-            myDiagram.nodes.each(node => {
-                if (node.data.name === nodeName) found = node;
-            });
-            if (found) {
-                myDiagram.select(found);
-                myDiagram.scrollToPart(found);
+            var nodeName = document.getElementById("nodeInput").value.trim();
+            if (nodeName) {
+                var found = null;
+                myDiagram.nodes.each(node => {
+                    if (node.data.name && node.data.name.toLowerCase() === nodeName.toLowerCase()) {
+                        found = node;
+                    }
+                });
+
+                if (found) {
+                    focusConnectedNodes(found);
+                    myDiagram.select(found);
+                    myDiagram.scrollToPart(found);
+                } else {
+                    alert("Node dengan nama '" + nodeName + "' tidak ditemukan.");
+                }
+            } else {
+                alert("Masukkan nama node terlebih dahulu.");
             }
         }
     </script>
