@@ -31,13 +31,36 @@
         .search-container {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 10px;
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
+            max-width: 800px;
+            margin: 10px auto;
+        }
+
+        .search-container h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .search-container input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            flex: 1;
+        }
+
+        .search-container button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #007bff;
+            color: white;
         }
 
         .modal {
@@ -67,6 +90,7 @@
             font-size: 14px;
             font-weight: 500;
             color: #555;
+            margin-bottom: 5px;
         }
 
         .form-group input,
@@ -110,6 +134,15 @@
         .btn-child {
             background: #f39c12;
         }
+
+        .btn-close {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 20px;
+            float: right;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -119,65 +152,80 @@
         <input type="text" id="nodeInput" list="nameSuggestions" placeholder="Cari nama..." oninput="filterNames()">
         <datalist id="nameSuggestions"></datalist>
         <button onclick="searchNode()"><i class="fas fa-search"></i></button>
+        <button onclick="showAddRootForm()" style="background: #28a745;"><i class="fas fa-plus-circle"></i> Tambah
+            Utama</button>
     </div>
+
     <div id="myDiagramDiv"></div>
 
     <!-- Modal Edit/Add -->
     <div id="modal" class="modal">
-        <button onclick="closeModal()" style="float:right">X</button>
+        <button class="btn-close" onclick="closeModal()">&times;</button>
         <h2 id="modalTitle">Edit Data</h2>
-        <input type="hidden" id="editKey">
-        <div class="form-group"><label>Nama:</label><input type="text" id="editName"></div>
-        <div class="form-group"><label>Gender:</label><select id="editGender">
-                <option value="male">Laki-laki</option>
-                <option value="female">Perempuan</option>
-            </select></div>
-        <div class="form-group"><label>Pasangan (Key):</label><input type="text" id="editSpouse" readonly></div>
-        <div class="form-group"><label>Orang Tua (Key):</label><input type="text" id="editParent" readonly></div>
-        <div class="form-group"><label>Alamat:</label><input type="text" id="editAlamat"></div>
-        <div class="form-group"><label>Telepon:</label><input type="text" id="editTel"></div>
-        <div class="button-group">
-            <button class="btn-save" onclick="saveEdit()"><i class="fa fa-save"></i> Simpan</button>
-            <button class="btn-delete" onclick="removeNode()"><i class="fa fa-trash"></i> Hapus</button>
-        </div>
-        <div class="button-group">
-            <button class="btn-spouse" onclick="showAddForm('Pasangan')"><i class="fa fa-user-plus"></i>
-                +Pasangan</button>
-            <button class="btn-child" onclick="showAddForm('Anak')"><i class="fa fa-child"></i> +Anak</button>
-        </div>
 
-        <div id="addFormExtra" style="display:none; margin-top:15px; border-top:1px solid #ccc; padding-top:10px;">
-            <h3 id="addTitle">Tambah Data</h3>
-            <div class="form-group"><label>Nama Baru:</label><input type="text" id="addName"></div>
-            <div class="form-group"><label>Gender Baru:</label><select id="addGender">
+        <div id="editFields">
+            <input type="hidden" id="editKey">
+            <div class="form-group"><label>Nama:</label><input type="text" id="editName"></div>
+            <div class="form-group"><label>Gender:</label><select id="editGender">
                     <option value="male">Laki-laki</option>
                     <option value="female">Perempuan</option>
                 </select></div>
-            <button class="btn-save" style="width:100%" onclick="submitNewData()">Submit</button>
+            <div class="form-group"><label>Pasangan (Key):</label><input type="text" id="editSpouse" readonly></div>
+            <div class="form-group"><label>Orang Tua (Key):</label><input type="text" id="editParent" readonly></div>
+            <div class="form-group"><label>Alamat:</label><input type="text" id="editAlamat"></div>
+            <div class="form-group"><label>Telepon:</label><input type="text" id="editTel"></div>
+            <div class="button-group">
+                <button class="btn-save" onclick="saveEdit()"><i class="fa fa-save"></i> Simpan</button>
+                <button class="btn-delete" onclick="removeNode()"><i class="fa fa-trash"></i> Hapus</button>
+            </div>
+            <div class="button-group" style="margin-top: 20px;">
+                <button class="btn-spouse" onclick="showAddForm('Pasangan')"><i class="fa fa-user-plus"></i>
+                    +Pasangan</button>
+                <button class="btn-child" onclick="showAddForm('Anak')"><i class="fa fa-child"></i> +Anak</button>
+            </div>
+        </div>
+
+        <div id="addFormExtra" style="display:none;">
+            <h3 id="addTitle">Tambah Data Baru</h3>
+            <div class="form-group"><label>Nama:</label><input type="text" id="addName" placeholder="Contoh: Ummi">
+            </div>
+            <div class="form-group"><label>Gender:</label><select id="addGender">
+                    <option value="male">Laki-laki</option>
+                    <option value="female">Perempuan</option>
+                </select></div>
+            <div class="form-group"><label>Alamat:</label><input type="text" id="addAlamat"
+                    placeholder="Contoh: Patemon"></div>
+            <div class="form-group"><label>Telepon:</label><input type="text" id="addTel" placeholder="+62..."></div>
+            <div class="button-group">
+                <button class="btn-save" style="width:100%" onclick="submitNewData()">Submit</button>
+                <button onclick="hideAddForm()"
+                    style="background:#666; color:white; border:none; border-radius:6px; padding:10px;">Batal</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // API URL (Paling bulletproof: Sertakan index.php)
+        // API URL (Gunakan index.php secara langsung)
         var API_URL = "https://merpati.my.id/tay/api/index.php";
 
         var $ = go.GraphObject.make;
         var myDiagram = $(go.Diagram, "myDiagramDiv", {
-            layout: $(go.TreeLayout, { angle: 90, layerSpacing: 35 })
+            layout: $(go.TreeLayout, { angle: 90, layerSpacing: 40 })
         });
 
         var selectedNode = null;
+        var currentAddType = "";
 
         // Node Template
         myDiagram.nodeTemplate = $(go.Node, "Auto",
             { doubleClick: (e, obj) => openModal(obj.part) },
             $(go.Shape, "RoundedRectangle", { fill: "white", strokeWidth: 2 },
-                new go.Binding("stroke", "gender", g => g === "male" ? "gold" : "red")),
-            $(go.TextBlock, { margin: 8, font: "bold 12px sans-serif" }, new go.Binding("text", "name"))
+                new go.Binding("stroke", "gender", g => g === "male" ? "#007bff" : "#dc3545")),
+            $(go.TextBlock, { margin: 10, font: "bold 13px sans-serif" }, new go.Binding("text", "name"))
         );
 
         // Link Template
-        myDiagram.linkTemplate = $(go.Link, { routing: go.Link.Orthogonal, corner: 5 }, $(go.Shape));
+        myDiagram.linkTemplate = $(go.Link, { routing: go.Link.Orthogonal, corner: 10 }, $(go.Shape, { strokeWidth: 2, stroke: "#666" }));
 
         // Load Data
         function loadData() {
@@ -192,6 +240,10 @@
 
         function openModal(node) {
             selectedNode = node;
+            document.getElementById("modalTitle").innerText = "Edit Anggota";
+            document.getElementById("editFields").style.display = "block";
+            document.getElementById("addFormExtra").style.display = "none";
+
             document.getElementById("editKey").value = node.data.key;
             document.getElementById("editName").value = node.data.name;
             document.getElementById("editGender").value = node.data.gender;
@@ -200,10 +252,42 @@
             document.getElementById("editAlamat").value = node.data.alamat || "";
             document.getElementById("editTel").value = node.data.tel || "";
             document.getElementById("modal").style.display = "block";
-            document.getElementById("addFormExtra").style.display = "none";
         }
 
         function closeModal() { document.getElementById("modal").style.display = "none"; }
+
+        function showAddRootForm() {
+            currentAddType = "Root";
+            document.getElementById("modalTitle").innerText = "Tambah Anggota Utama";
+            document.getElementById("editFields").style.display = "none";
+            document.getElementById("addFormExtra").style.display = "block";
+            document.getElementById("addName").value = "";
+            document.getElementById("addAlamat").value = "";
+            document.getElementById("addTel").value = "";
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function showAddForm(type) {
+            currentAddType = type;
+            document.getElementById("addTitle").innerText = "Tambah " + type + " untuk " + selectedNode.data.name;
+            document.getElementById("editFields").style.display = "none";
+            document.getElementById("addFormExtra").style.display = "block";
+            document.getElementById("addName").value = "";
+            document.getElementById("addAlamat").value = "";
+            document.getElementById("addTel").value = "";
+            if (type === "Pasangan") {
+                document.getElementById("addGender").value = (selectedNode.data.gender === "male" ? "female" : "male");
+            }
+        }
+
+        function hideAddForm() {
+            if (selectedNode) {
+                document.getElementById("editFields").style.display = "block";
+                document.getElementById("addFormExtra").style.display = "none";
+            } else {
+                closeModal();
+            }
+        }
 
         function saveEdit() {
             const payload = {
@@ -229,34 +313,57 @@
             }).then(() => { closeModal(); loadData(); });
         }
 
-        var currentAddType = "";
-        function showAddForm(type) {
-            currentAddType = type;
-            document.getElementById("addTitle").innerText = "Tambah " + type;
-            document.getElementById("addFormExtra").style.display = "block";
-            document.getElementById("addName").value = "";
-            if (type === "Pasangan") {
-                document.getElementById("addGender").value = (selectedNode.data.gender === "male" ? "female" : "male");
-            }
-        }
-
         function submitNewData() {
             const payload = {
                 name: document.getElementById("addName").value,
                 gender: document.getElementById("addGender").value,
-                alamat: "", tel: ""
+                alamat: document.getElementById("addAlamat").value,
+                tel: document.getElementById("addTel").value
             };
-            if (currentAddType === "Pasangan") payload.spouse = selectedNode.data.key;
-            if (currentAddType === "Anak") payload.parent = selectedNode.data.key;
+            if (currentAddType === "Pasangan" && selectedNode) payload.spouse = selectedNode.data.key;
+            if (currentAddType === "Anak" && selectedNode) payload.parent = selectedNode.data.key;
 
             fetch(API_URL + "/person", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
-            }).then(() => { closeModal(); loadData(); });
+            }).then(res => res.json())
+                .then(res => {
+                    if (res.status === "success") {
+                        closeModal();
+                        loadData();
+                    } else {
+                        alert("Gagal: " + res.message);
+                    }
+                });
         }
 
         loadData();
+
+        function filterNames() {
+            var input = document.getElementById("nodeInput").value.toLowerCase();
+            var datalist = document.getElementById("nameSuggestions");
+            datalist.innerHTML = "";
+            myDiagram.nodes.each(node => {
+                if (node.data.name && node.data.name.toLowerCase().includes(input)) {
+                    var option = document.createElement("option");
+                    option.value = node.data.name;
+                    datalist.appendChild(option);
+                }
+            });
+        }
+
+        function searchNode() {
+            var nodeName = document.getElementById("nodeInput").value;
+            var found = null;
+            myDiagram.nodes.each(node => {
+                if (node.data.name === nodeName) found = node;
+            });
+            if (found) {
+                myDiagram.select(found);
+                myDiagram.scrollToPart(found);
+            }
+        }
     </script>
 </body>
 
