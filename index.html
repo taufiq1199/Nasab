@@ -71,33 +71,32 @@
             top: 50%;
             transform: translate(-50%, -50%);
             background: #fff;
-            padding: 20px 25px;
-            border-radius: 12px;
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 14px 16px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.18);
             width: 90%;
-            max-width: 450px;
+            max-width: 420px;
             text-align: left;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
         }
 
         .modal h2,
         .modal h3 {
-            margin-top: 0;
-            margin-bottom: 20px;
+            margin: 0 0 10px;
             text-align: center;
             color: #333;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 8px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 0;
         }
 
         .form-group.full-width {
@@ -106,20 +105,20 @@
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 5px;
+            color: #666;
+            margin-bottom: 2px;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px;
+            padding: 6px 8px;
             border: 1px solid #ced4da;
-            border-radius: 6px;
+            border-radius: 5px;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 13px;
             transition: border-color 0.2s;
         }
 
@@ -130,32 +129,32 @@
         }
 
         .form-group input:disabled {
-            background-color: #e9ecef;
-            color: #495057;
+            background-color: #f0f0f0;
+            color: #555;
             cursor: not-allowed;
         }
 
         .button-group {
             display: flex;
             justify-content: space-between;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .button-group button {
             flex: 1;
-            padding: 10px;
+            padding: 7px 6px;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
             color: white;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 12px;
             transition: opacity 0.2s, transform 0.1s;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .button-group button:hover {
@@ -188,12 +187,12 @@
 
         .btn-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 10px;
+            right: 12px;
             background: none;
             border: none;
-            color: #999;
-            font-size: 24px;
+            color: #aaa;
+            font-size: 20px;
             cursor: pointer;
             line-height: 1;
             transition: color 0.2s;
@@ -203,19 +202,122 @@
             color: #333;
         }
 
+        /* ==== Confirm Modal (Small & Simple) ==== */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            z-index: 1100;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.25);
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .confirm-modal h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .confirm-modal p {
+            font-size: 13px;
+            color: #666;
+            margin: 0 0 20px;
+        }
+
+        .confirm-btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .confirm-btn-group button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .btn-confirm-yes {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-confirm-no {
+            background: #f0f0f0;
+            color: #333;
+        }
+
         @media (max-width: 480px) {
             .form-grid {
                 grid-template-columns: 1fr;
-                gap: 10px;
+                gap: 6px;
             }
 
             .form-group.full-width {
                 grid-column: span 1;
             }
+        }
 
-            .button-group {
-                flex-direction: column;
-            }
+        /* Relationship Status List in Modal */
+        .relationship-list {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0 0;
+        }
+
+        .relationship-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 8px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            font-size: 13px;
+        }
+
+        .btn-toggle-status {
+            padding: 2px 6px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .btn-toggle-status:hover {
+            background: #f0f0f0;
+        }
+
+        .status-active {
+            color: #28a745;
+        }
+
+        .status-divorced {
+            color: #dc3545;
         }
     </style>
 </head>
@@ -248,8 +350,14 @@
                 </div>
                 <div class="form-group full-width"><label>Alamat:</label><input type="text" id="editAlamat"></div>
 
-                <div class="form-group"><label>Pasangan:</label><input type="text" id="editSpouseName" disabled></div>
-                <div class="form-group"><label>Orang Tua:</label><input type="text" id="editParentName" disabled></div>
+                <div class="form-group full-width">
+                    <label>Pasangan & Status:</label>
+                    <div id="spouseListContainer">
+                        <ul id="editSpouseList" class="relationship-list"></ul>
+                    </div>
+                </div>
+                <div class="form-group full-width"><label>Orang Tua:</label><input type="text" id="editParentName"
+                        disabled></div>
             </div>
 
             <div class="button-group">
@@ -284,6 +392,16 @@
         </div>
     </div>
 
+    <!-- Custom Confirm Modal -->
+    <div id="confirmModal" class="confirm-modal">
+        <h3>Hapus Data?</h3>
+        <p id="confirmText">Apakah Anda yakin ingin menghapus data ini dari silsilah?</p>
+        <div class="confirm-btn-group">
+            <button class="btn-confirm-yes" onclick="executeDelete()"><i class="fa fa-trash"></i> Ya, Hapus</button>
+            <button class="btn-confirm-no" onclick="closeConfirm()"><i class="fa fa-times"></i> Batal</button>
+        </div>
+    </div>
+
     <script>
         // API URL (Gunakan index.php secara langsung)
         var API_URL = "https://merpati.my.id/tay/api/index.php";
@@ -293,12 +411,15 @@
             "undoManager.isEnabled": true,
             layout: $(go.TreeLayout, {
                 angle: 0,
-                layerSpacing: 30,
-                nodeSpacing: 5,
+                layerSpacing: 40,
+                nodeSpacing: 10,
                 alignment: go.TreeLayout.AlignmentCenter,
                 sorting: go.TreeLayout.SortingAscending
             })
         });
+
+        // Nonaktifkan delete node via keyboard (Delete/Backspace)
+        myDiagram.commandHandler.deleteSelection = function () { };
 
         var selectedNode = null;
         var currentAddType = "";
@@ -361,44 +482,31 @@
         // Link Template Default (Anak) dengan 🪢
         myDiagram.linkTemplate = $(go.Link,
             { routing: go.Link.AvoidsNodes, curve: go.Link.JumpOver },
-            $(go.Shape),
-            $(go.Shape, { toArrow: "Standard" }),
-            $(go.Panel, "Auto",
-                {
-                    segmentFraction: 0.5,
-                    segmentOrientation: function (link) {
-                        return link.actualBounds.width > link.actualBounds.height
-                            ? go.Link.OrientUpright
-                            : go.Link.OrientSideways;
-                    }
-                },
-                $(go.TextBlock, "🪢", { font: "bold 10px sans-serif", stroke: "black" })
-            )
+            $(go.Shape, { strokeWidth: 1 }),
+            $(go.Shape, { toArrow: "Standard", strokeWidth: 1 })
         );
 
         // Link Template Khusus (Pasangan) dengan ❤️
         myDiagram.linkTemplateMap.add("Spouse",
             $(go.Link,
-                { routing: go.Link.Orthogonal, selectable: false }, // Garis tidak bisa dipilih
-                $(go.Shape, { stroke: "green", strokeWidth: 2 }), // Garis hijau
-                $(go.TextBlock, "❤️",  // Ikon pernikahan
+                { routing: go.Link.Orthogonal, selectable: false },
+                $(go.Shape, { stroke: "black", strokeWidth: 1 }),
+                $(go.Panel, "Auto",
                     {
-                        segmentFraction: 0.5, // Posisikan ikon di tengah garis
-                        font: "10px Arial",
-                        stroke: "red",
-
-                        // Gunakan logika untuk orientasi tergantung pada panjang link
-                        segmentOrientation: function (link) {
-                            if (link.actualBounds.width > link.actualBounds.height) {
-                                return go.Link.OrientUpright; // Orientasi tegak untuk garis horizontal
-                            } else {
-                                return go.Link.OrientSideways; // Orientasi datar untuk garis vertikal
-                            }
-                        }
-                    }
+                        segmentFraction: 0.5
+                    },
+                    $(go.Shape, "RoundedRectangle", { fill: "white", stroke: "#ccc", strokeWidth: 1 }),
+                    $(go.TextBlock, "❤️",
+                        { font: "12px Arial", stroke: "red", margin: 2 },
+                        new go.Binding("text", "status", s => s === "divorced" ? "💔" : "❤️")
+                    )
                 )
             )
         );
+
+
+
+
 
         // Load Data
         function loadData() {
@@ -406,10 +514,8 @@
                 .then(res => res.json())
                 .then(res => {
                     if (res.status === "success") {
-                        // Kategori 'Spouse' ditentukan di backend atau frontend
-                        // Pastikan frontend juga mengenali kategori dari key pasangannya
                         res.data.links.forEach(link => {
-                            // Cek jika ini adalah hubungan pasangan yang ditentukan dari data
+                            // Deteksi otomatis tipe link pasangan
                             if (!link.category && res.data.nodes.find(n => n.key === link.from && n.spouse == link.to)) {
                                 link.category = "Spouse";
                             }
@@ -431,23 +537,75 @@
             document.getElementById("editAlamat").value = node.data.alamat || "";
             document.getElementById("editTel").value = node.data.tel || "";
 
-            // Mapping nama Pasangan dan Orang Tua (Berdasarkan ID di Model GoJS)
-            let spouseName = "-";
-            if (node.data.spouse) {
-                let sNode = myDiagram.model.findNodeDataForKey(node.data.spouse);
-                if (sNode) spouseName = sNode.name;
+            // Nama Pasangan & Status (Bisa lebih dari satu)
+            let editSpouseList = document.getElementById("editSpouseList");
+            editSpouseList.innerHTML = "";
+            let spouseFound = false;
+
+            node.findLinksConnected().each(l => {
+                if (l.data.category === "Spouse") {
+                    spouseFound = true;
+                    let otherNode = l.getOtherNode(node);
+                    let status = l.data.status || "active";
+
+                    let li = document.createElement("li");
+                    li.className = "relationship-item";
+
+                    let nameSpan = document.createElement("span");
+                    nameSpan.innerHTML = (status === 'divorced' ? '💔 ' : '❤️ ') + '<b>' + otherNode.data.name + '</b>';
+
+                    let toggleBtn = document.createElement("button");
+                    toggleBtn.className = "btn-toggle-status";
+                    toggleBtn.innerText = status === 'divorced' ? "❤️ Rujuk" : "💔 Cerai";
+                    toggleBtn.onclick = () => toggleDivorce(node.data.key, otherNode.data.key, status);
+
+                    li.appendChild(nameSpan);
+                    li.appendChild(toggleBtn);
+                    editSpouseList.appendChild(li);
+                }
+            });
+
+            if (!spouseFound) {
+                editSpouseList.innerHTML = "<li style='font-size:12px;color:#999;'>- Tidak ada pasangan -</li>";
             }
 
-            let parentName = "-";
+            // Nama Orang Tua — tampilkan semua pasangan orang tua (Ayah & Para Ibu)
+            let parentDisplayName = "-";
             if (node.data.parent) {
-                let pNode = myDiagram.model.findNodeDataForKey(node.data.parent);
-                if (pNode) parentName = pNode.name;
+                let pNodeObj = myDiagram.findNodeForKey(node.data.parent);
+                if (pNodeObj) {
+                    let pData = pNodeObj.data;
+                    let pSpouses = [];
+                    pNodeObj.findLinksConnected().each(l => {
+                        if (l.data.category === "Spouse") {
+                            let other = l.getOtherNode(pNodeObj);
+                            if (other) {
+                                let sChar = l.data.status === 'divorced' ? '💔' : '❤️';
+                                pSpouses.push(sChar + " " + other.data.name);
+                            }
+                        }
+                    });
+
+                    if (pSpouses.length > 0) {
+                        parentDisplayName = pData.gender === "male"
+                            ? pData.name + " (" + pSpouses.join(", ") + ")"
+                            : pSpouses.join(", ") + " (" + pData.name + ")";
+                    } else {
+                        parentDisplayName = pData.name;
+                    }
+                }
             }
 
-            document.getElementById("editSpouseName").value = spouseName;
-            document.getElementById("editParentName").value = parentName;
+            document.getElementById("editParentName").value = parentDisplayName;
 
             document.getElementById("modal").style.display = "block";
+
+            // Proteksi double-click: Nonaktifkan tombol selama 300ms agar klik kedua tidak tidak sengaja menekan 'Hapus'
+            const btnGroups = document.querySelectorAll(".modal .button-group");
+            btnGroups.forEach(g => g.style.pointerEvents = "none");
+            setTimeout(() => {
+                btnGroups.forEach(g => g.style.pointerEvents = "auto");
+            }, 300);
         }
 
         function closeModal() { document.getElementById("modal").style.display = "none"; }
@@ -471,6 +629,7 @@
             document.getElementById("addName").value = "";
             document.getElementById("addAlamat").value = "";
             document.getElementById("addTel").value = "";
+
             if (type === "Pasangan") {
                 document.getElementById("addGender").value = (selectedNode.data.gender === "male" ? "female" : "male");
             }
@@ -501,7 +660,16 @@
         }
 
         function removeNode() {
-            if (!confirm("Hapus data ini?")) return;
+            document.getElementById("confirmText").innerText = "Hapus " + selectedNode.data.name + " dari silsilah?";
+            document.getElementById("confirmModal").style.display = "block";
+        }
+
+        function closeConfirm() {
+            document.getElementById("confirmModal").style.display = "none";
+        }
+
+        function executeDelete() {
+            closeConfirm();
             fetch(API_URL + "/person/delete", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -569,6 +737,25 @@
             } else {
                 alert("Masukkan nama node terlebih dahulu.");
             }
+        }
+
+        function toggleDivorce(p1, p2, currentStatus) {
+            const newStatus = currentStatus === 'divorced' ? 'active' : 'divorced';
+            fetch(API_URL + "/spouse/status", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ person1: p1, person2: p2, status: newStatus })
+            }).then(res => res.json())
+                .then(res => {
+                    if (res.status === "success") {
+                        loadData();
+                        // Refresh modal content
+                        setTimeout(() => {
+                            const node = myDiagram.findNodeForKey(p1);
+                            if (node) openModal(node);
+                        }, 100);
+                    }
+                });
         }
     </script>
 </body>
